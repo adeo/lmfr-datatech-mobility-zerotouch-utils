@@ -1,0 +1,15 @@
+include:
+  - project: adeotech/lmfr/datatech/lmfr-datatech-gitlab-ci
+    file: GcloudCD.gitlab-ci.yml
+
+stages:
+  - deploy
+
+deploy_gcp:
+  stage: deploy
+  extends: .gcloud-run
+  only: ['master']
+  variables:
+    PROJECT_ID: sp-mobilitytech-dev-frlm
+    IMAGE_NAME: zerotouch-utils
+    SERVICE_ACCOUNT: mobilitytech@sp-mobilitytech-dev-frlm.iam.gserviceaccount.com
