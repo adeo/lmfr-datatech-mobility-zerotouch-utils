@@ -327,38 +327,3 @@ def removeConfiguration(service=None, customer_account=None, devicesList=None):
         if response != {}:
             errors += 1
     return errors
-
-
-def main(request):
-    # Create a zero-touch enrollment API service endpoint.
-    service = get_service()
-
-    # Get the customer's account. Because a customer might have more
-    # than one, limit the results to the first account found.
-    response = service.customers().list(pageSize=1).execute()
-    if 'customers' not in response:
-        # No accounts found for the user. Confirm the Google Account
-        # that authorizes the request can access the zero-touch portal.
-        print('No zero-touch enrollment account found.')
-        sys.exit()
-
-    # customer account for api zero touch enrollment
-    customer_account = response['customers'][0]['name']
-    # print(getConfigByName(service, customer_account, "WS1 - Preprod - EloTouch Adhésion"))
-    # print(getDevicesListByConfig(service, customer_account, None, "WS1 - Preprod - EloTouch Adhésion"))
-    # print(getDevicesListByConstructor(service, customer_account, None, "oppo"))
-    # print constructors list for helping user
-    print(getDevicesList(service, customer_account))
-    return json.dumps({
-        'ConstructorsList': getConstructorsList(service=service, customer_account=customer_account)
-    })
-    # check = applyConfigByNameToDevicesListByConstructor(
-    #     service=service,
-    #     customer_account=customer_account,
-    #     configName='WS1 - Prod - Managed',
-    #     constructor='oppo'  # Nokia
-    # )
-    # if check == 0:
-    #     print("All devices get configuration")
-    # else:
-    #     print("Error occured")

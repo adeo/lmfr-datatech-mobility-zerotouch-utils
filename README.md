@@ -1,13 +1,12 @@
-# This Project is for Zebra TC52 applications in shared environment
+# This Project is for Managing zeroTouch console
 
-Add export information for download bundle :
-````
-#!/bin/bash
-export NEXUS_LM_LDAP=<LDAP>
-export NEXUS_LM_PASSWORD=<PASSWORD>
-export JFROG_ADEO_LDAP=<LDAP>
-export JFROG_ADEO_PASSWORD=<PASSWORD>
-export ANDROID_HOME=<ANDROID_HOME>
-export GIT_TOKEN=<TOKEN>
-````
+# Run
 
+```python
+python apps.py
+```
+
+```shell script
+docker build -t dev .
+docker run -p 8080:8080 dev
+```
