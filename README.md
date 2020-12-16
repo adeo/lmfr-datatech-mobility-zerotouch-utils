@@ -1,6 +1,6 @@
 # This Project is for Managing zeroTouch console
 
-# Run
+# Start
 
 ```python
 python apps.py
