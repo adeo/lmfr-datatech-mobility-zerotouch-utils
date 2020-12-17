@@ -153,6 +153,23 @@ def getConstructorsList(service=None, customer_account=None):
             constructorList.append(device["manufacturer"].lower())
     return constructorList
 
+def getOrderIdList(service=None, customer_account=None):
+    """
+    Get all constructors.\n
+    check docs for manufacurer value.\n
+    here: https://developers.google.com/zero-touch/resources/manufacturer-names#manufacturers-names
+    :param Resource service: service resource
+    :param str customer_account: name of customer account needed to access google api zero touch enrollment
+
+    :return: list of all constructors
+    :rtype: list
+    """
+    devicesList = getDevicesList(service=service, customer_account=customer_account)
+    orderIdList = list()
+    for device in devicesList:
+        if device["orderId"] is not None and device["orderId"].lower() not in orderIdList:
+            orderIdList.append(device["orderId"].lower())
+    return orderIdList
 
 def getDevicesListByConstructor(service=None, customer_account=None, devicesList=None, constructor=None):
     """

@@ -6,7 +6,8 @@ from flask import Flask, jsonify, request, Blueprint
 from setupEnv import setupEnv
 
 from src.zerotouch import getDevicesList, get_service, getConstructorsList, getDevicesListByConstructor, \
-    getDevicesListByOrderId, applyConfigByNameToDevicesListByConstructor, applyConfigByNameToDevicesListByOrderId
+    getDevicesListByOrderId, applyConfigByNameToDevicesListByConstructor, applyConfigByNameToDevicesListByOrderId, \
+    getOrderIdList
 
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 app = Flask(__name__)
@@ -71,6 +72,18 @@ def constructor():
     customer_account = response['customers'][0]['name']
     return jsonify({
         'ConstructorsList': getConstructorsList(service=service, customer_account=customer_account)
+    }), 200
+
+@app.route('/order', methods=['GET'])
+def order():
+    service = get_service()
+    response = service.customers().list(pageSize=1).execute()
+    if 'customers' not in response:
+        return 'No zero-touch enrollment account found.', 404
+
+    customer_account = response['customers'][0]['name']
+    return jsonify({
+        'ConstructorsList': getOrderIdList(service=service, customer_account=customer_account)
     }), 200
 
 
