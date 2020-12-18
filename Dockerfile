@@ -8,4 +8,5 @@ RUN pip install gunicorn
 COPY src src
 COPY setupEnv.py setupEnv.py
 COPY apps.py apps.py
-CMD exec gunicorn --bind :$PORT --workers 1 --threads 8 --timeout 0 --log-level=info apps:app
+COPY entrypoint.py entrypoint.py
+CMD python entrypoint.py

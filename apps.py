@@ -12,6 +12,7 @@ from src.zerotouch import getDevicesList, get_service, getConstructorsList, getD
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 app = Flask(__name__)
 
+
 @app.route('/')
 def doc():
     return jsonify({
@@ -74,6 +75,7 @@ def constructor():
         'ConstructorsList': getConstructorsList(service=service, customer_account=customer_account)
     }), 200
 
+
 @app.route('/order', methods=['GET'])
 def order():
     service = get_service()
@@ -119,6 +121,7 @@ def apply_config_constructor(constructor=None):
     customer_account = response['customers'][0]['name']
     applyConfigByNameToDevicesListByConstructor(service, customer_account, request.args.get('config'), constructor)
     return jsonify({"success": True}), 200
+
 
 if __name__ == "__main__":
     setupEnv()

@@ -33,7 +33,6 @@ def getVaultCred(path):
         "X-Vault-Token": vault_token,
         "X-Vault-Namespace": vault_namespace
     }
-
     vault_secret = path
     response = requests.get(vault_url + '/v1/secret/data/' + vault_secret, headers=headers)
     return response.json()["data"]["data"]
