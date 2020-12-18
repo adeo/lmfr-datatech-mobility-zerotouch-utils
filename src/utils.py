@@ -9,7 +9,7 @@ def getVaultCred(path):
     """
     vault_url = "https://vault.factory.adeo.cloud"
     # nom du repo sur le vault-module editor
-    gcp_role = "bundleTC52Shared"
+    gcp_role = "zero-touch"
     vault_namespace = "frlm/mobilitytech"
     headers = {
         'Metadata-Flavor': "Google"
