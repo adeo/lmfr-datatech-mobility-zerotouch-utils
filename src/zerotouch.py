@@ -153,6 +153,7 @@ def getConstructorsList(service=None, customer_account=None):
             constructorList.append(device["manufacturer"].lower())
     return constructorList
 
+
 def getOrderIdList(service=None, customer_account=None):
     """
     Get all constructors.\n
@@ -170,6 +171,7 @@ def getOrderIdList(service=None, customer_account=None):
         if device["orderId"] is not None and device["orderId"].lower() not in orderIdList:
             orderIdList.append(device["orderId"].lower())
     return orderIdList
+
 
 def getDevicesListByConstructor(service=None, customer_account=None, devicesList=None, constructor=None):
     """
@@ -204,7 +206,8 @@ def getDevicesListByOrderId(service=None, customer_account=None, devicesList=Non
     """
     if devicesList is None:
         devicesList = getDevicesList(service, customer_account)
-    return [device for device in devicesList if "orderId" in device and  device["orderId"] is not None and orderId.lower() == device["orderId"].lower()]
+    return [device for device in devicesList if
+            "orderId" in device and device["orderId"] is not None and orderId.lower() == device["orderId"].lower()]
 
 
 def getDevicesListByConfig(service=None, customer_account=None, devicesList=None, name=None):
@@ -312,7 +315,7 @@ def applyConfigByNameToDevicesListByOrderId(service=None, customer_account=None,
     :rtype: int
     """
     devicesList = getDevicesListByOrderId(service=service, customer_account=customer_account,
-                                              orderId=orderId)
+                                          orderId=orderId)
     config = getConfigByName(service=service, customer_account=customer_account, name=configName)
     return applyConfigDevices(service=service, customer_account=customer_account, devicesList=devicesList,
                               configuration=config)
