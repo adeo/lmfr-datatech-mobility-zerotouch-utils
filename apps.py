@@ -123,6 +123,21 @@ def apply_config_constructor(constructor=None):
     return jsonify({"success": True}), 200
 
 
+@app.route('/devices/constructor/<constructor>/unclaim', methods=['GET'])
+def unclaim(constructor=None):
+    service = get_service()
+    response = service.customers().list(pageSize=1).execute()
+    if 'customers' not in response:
+        return 'No zero-touch enrollment account found.', 404
+
+    customer_account = response['customers'][0]['name']
+    devices = getDevicesListByConstructor(service, customer_account, None, constructor)
+    for device in devices:
+        service.customers().devices().unclaim(parent=customer_account,
+                                              body={'device': {"deviceIdentifier": device["deviceIdentifier"]}}).execute()
+    return jsonify({"success": True})
+
+
 if __name__ == "__main__":
     setupEnv()
     app.run(debug=True, host='0.0.0.0', port=8080)

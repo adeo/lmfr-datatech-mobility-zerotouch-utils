@@ -15,19 +15,20 @@ def getVaultCred(path):
         'Metadata-Flavor': "Google"
     }
     # google token
-    response = requests.get(
-        "http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=https://vault.factory.adeo.cloud/vault/" + gcp_role + "&format=full",
-        headers=headers, verify=False)
-    google_token = response.text
-
-    # get le token de login de vault
-    headers = {
-        "X-Vault-Namespace": vault_namespace
-    }
-    response = requests.post(vault_url + '/v1/auth/gcp/login', json={"role": gcp_role, "jwt": google_token},
-                             headers=headers)
-    login_obj = response.json()
-    vault_token = login_obj["auth"]["client_token"]
+    # response = requests.get(
+    #     "http://metadata/computeMetadata/v1/instance/service-accounts/default/identity?audience=https://vault.factory.adeo.cloud/vault/" + gcp_role + "&format=full",
+    #     headers=headers, verify=False)
+    # google_token = response.text
+    #
+    # # get le token de login de vault
+    # headers = {
+    #     "X-Vault-Namespace": vault_namespace
+    # }
+    # response = requests.post(vault_url + '/v1/auth/gcp/login', json={"role": gcp_role, "jwt": google_token},
+    #                          headers=headers)
+    # login_obj = response.json()
+    # vault_token = login_obj["auth"]["client_token"]
+    vault_token = "s.urOQHu7c1WQYFLUVv3mAnAvu.Ambxj"
     # call pour get les creds
     headers = {
         "X-Vault-Token": vault_token,
