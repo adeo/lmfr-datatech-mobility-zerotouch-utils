@@ -112,6 +112,26 @@ def apply_config_orderId(orderId=None):
     return jsonify({"success": True}), 200
 
 
+@app.route('/orange/<orderId>', methods=['GET'])
+def orange(orderId=None):
+    service = get_service()
+    response = service.customers().list(pageSize=1).execute()
+    if 'customers' not in response:
+        return 'No zero-touch enrollment account found.', 404
+    customer_account = response['customers'][0]['name']
+    devices = getDevicesListByOrderId(service, customer_account, None, orderId)
+    if not devices:
+        return jsonify({"success": False, "message": "la commande n'est pas presente dans la console"}), 404
+    errors = applyConfigByNameToDevicesListByOrderId(service=service, customer_account=customer_account,
+                                                     configName="WS1 - Prod - Managed", devicesList=devices,
+                                                     orderId=orderId)
+    if errors == 0:
+        return jsonify({"success": True, "message": "OK", "devices": len(devices), "errors": errors}), 200
+    else:
+        return jsonify(
+            {"success": True, "message": "Des erreurs sont survenues", "devices": len(devices), "errors": errors}), 404
+
+
 @app.route('/devices/constructor/<constructor>/apply', methods=['GET'])
 def apply_config_constructor(constructor=None):
     service = get_service()
@@ -134,7 +154,8 @@ def unclaim(constructor=None):
     devices = getDevicesListByConstructor(service, customer_account, None, constructor)
     for device in devices:
         service.customers().devices().unclaim(parent=customer_account,
-                                              body={'device': {"deviceIdentifier": device["deviceIdentifier"]}}).execute()
+                                              body={
+                                                  'device': {"deviceIdentifier": device["deviceIdentifier"]}}).execute()
     return jsonify({"success": True})
 
 

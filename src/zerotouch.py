@@ -157,7 +157,7 @@ def getConstructorsList(service=None, customer_account=None):
 def getOrderIdList(service=None, customer_account=None, devicesList=None):
     """
     Get all constructors.\n
-    check docs for manufacurer value.\n
+    check docs for manufacturer value.\n
     here: https://developers.google.com/zero-touch/resources/manufacturer-names#manufacturers-names
     :param Resource service: service resource
     :param str customer_account: name of customer account needed to access google api zero touch enrollment
