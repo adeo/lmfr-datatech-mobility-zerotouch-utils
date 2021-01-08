@@ -208,7 +208,7 @@ def getDevicesListByOrderId(service=None, customer_account=None, devicesList=Non
     if devicesList is None:
         devicesList = getDevicesList(service, customer_account)
     return [device for device in devicesList if
-            "orderId" in device and device["orderId"] is not None and orderId.lower() == device["orderId"].lower()]
+            "orderId" in device and device["orderId"] is not None and orderId.lower() in device["orderId"].lower()]
 
 
 def getDevicesListByConfig(service=None, customer_account=None, devicesList=None, name=None):
