@@ -154,7 +154,7 @@ def getConstructorsList(service=None, customer_account=None):
     return constructorList
 
 
-def getOrderIdList(service=None, customer_account=None):
+def getOrderIdList(service=None, customer_account=None, devicesList=None):
     """
     Get all constructors.\n
     check docs for manufacurer value.\n
@@ -165,7 +165,8 @@ def getOrderIdList(service=None, customer_account=None):
     :return: list of all constructors
     :rtype: list
     """
-    devicesList = getDevicesList(service=service, customer_account=customer_account)
+    if devicesList is None:
+        devicesList = getDevicesList(service=service, customer_account=customer_account)
     orderIdList = list()
     for device in devicesList:
         if device["orderId"] is not None and device["orderId"].lower() not in orderIdList:
@@ -302,10 +303,11 @@ def applyConfigByNameToDevicesListByConstructor(service=None, customer_account=N
                               configuration=config)
 
 
-def applyConfigByNameToDevicesListByOrderId(service=None, customer_account=None, configName=None, orderId=None):
+def applyConfigByNameToDevicesListByOrderId(service=None, customer_account=None, configName=None, devicesList=None, orderId=None):
     """
     Apply config with name configName to all devices with orderid.
 
+    :param devicesList:
     :param Resource service: service resource
     :param str customer_account: name of customer account needed to access google api zero touch enrollment
     :param str OrderId: orderId
@@ -314,8 +316,9 @@ def applyConfigByNameToDevicesListByOrderId(service=None, customer_account=None,
     :return: number of errors
     :rtype: int
     """
-    devicesList = getDevicesListByOrderId(service=service, customer_account=customer_account,
-                                          orderId=orderId)
+    if devicesList is None:
+        devicesList = getDevicesListByOrderId(service=service, customer_account=customer_account,
+                                              orderId=orderId)
     config = getConfigByName(service=service, customer_account=customer_account, name=configName)
     return applyConfigDevices(service=service, customer_account=customer_account, devicesList=devicesList,
                               configuration=config)
