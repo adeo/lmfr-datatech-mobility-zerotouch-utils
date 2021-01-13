@@ -22,4 +22,3 @@ deploy_gcp_prod:
     PROJECT_ID: sp-mobilitytech-prod-frlm
     IMAGE_NAME: zerotouch-utils-prod
     SERVICE_ACCOUNT: mobilitytech@sp-mobilitytech-prod-frlm.iam.gserviceaccount.com
-    SVC: ${SVC_PREPROD}
