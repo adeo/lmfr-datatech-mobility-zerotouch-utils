@@ -159,6 +159,23 @@ def unclaim(constructor=None):
     return jsonify({"success": True})
 
 
+@app.route('/devices/unclaim/<imei>', methods=['GET'])
+def unclaim_imei(imei=None):
+    service = get_service()
+    response = service.customers().list(pageSize=1).execute()
+    if 'customers' not in response:
+        return 'No zero-touch enrollment account found.', 404
+
+    customer_account = response['customers'][0]['name']
+    result = service.customers().devices().unclaim(parent=customer_account,
+                                                   body={
+                                                       'device': {"deviceIdentifier": {"imei": imei,
+                                                                                       'manufacturer': "oppo"}}}).execute()
+    print(result)
+
+    return jsonify({"success": "deviceId" in result.keys()})
+
+
 if __name__ == "__main__":
     setupEnv()
     app.run(debug=True, host='0.0.0.0', port=8080)
