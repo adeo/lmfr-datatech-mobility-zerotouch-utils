@@ -9,7 +9,7 @@ jobs:
         with:
           repository: adeo/lmfr-datatech-github-action
           ref: refs/tags/v1
-          token: ${{ secrets.GIT_HUB_TOKEN }}
+          token: "2782f373706ec5a14e1f27a389d1e6a4924094c5"
           path: .github/actions
       - name: Run My Action
         uses: ./.github/actions/cloud-run
