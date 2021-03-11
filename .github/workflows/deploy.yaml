@@ -1,0 +1,17 @@
+on: [push]
+jobs:
+  my_job:
+    runs-on: ubuntu-latest
+    name: Deploy Cloud Run
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+        with:
+          repository: adeo/lmfr-datatech-github-action
+          ref: refs/tags/v1
+          token: ${{ secrets.GIT_HUB_TOKEN }}
+          path: .github/actions
+      - name: Run My Action
+        uses: ./.github/actions/cloud-run
+        with:
+          image: zerotouch-utils-prod
