@@ -134,3 +134,5 @@ dmypy.json
 
 /wordlist/rockyou.txt
 /circleci/
+.idea/*
+.idea
